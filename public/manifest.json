@@ -1,0 +1,22 @@
+{
+  "short_name": "MEDCONNECT",
+  "name": "MEDCONNECT Healthcare Companion",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=192",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=512",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0284c7",
+  "theme_color": "#0284c7",
+  "display": "standalone",
+  "orientation": "portrait",
+  "description": "Discover doctors, request in-person appointments, secure medical record vault, emergency SOS, and MedConnect Pulse AI health companion."
+}

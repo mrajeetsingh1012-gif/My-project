@@ -1,0 +1,153 @@
+{
+  "entities": {
+    "doctors": {
+      "title": "Doctor",
+      "description": "Healthcare provider listing in directory",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "specialty": { "type": "string" },
+        "qualification": { "type": "string" },
+        "experienceYears": { "type": "number" },
+        "fee": { "type": "number" },
+        "hospitalId": { "type": "string" },
+        "hospitalName": { "type": "string" },
+        "rating": { "type": "number" },
+        "photo": { "type": "string" },
+        "bio": { "type": "string" }
+      },
+      "required": ["name", "specialty"]
+    },
+    "hospitals": {
+      "title": "Hospital",
+      "description": "Hospital healthcare facility",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "phone": { "type": "string" },
+        "emergencyPhone": { "type": "string" },
+        "photo": { "type": "string" }
+      },
+      "required": ["name", "emergencyPhone"]
+    },
+    "banners": {
+      "title": "Banner",
+      "description": "Health campaign carousel banners",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "priority": { "type": "number" }
+      },
+      "required": ["title", "isActive"]
+    },
+    "emergencyAlerts": {
+      "title": "Emergency Alert",
+      "description": "Regional emergency and health alerts",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "severity": { "type": "string" },
+        "active": { "type": "boolean" },
+        "date": { "type": "string" }
+      },
+      "required": ["title", "active"]
+    },
+    "appointments": {
+      "title": "Appointment",
+      "description": "Doctor consultation and appointment requests",
+      "type": "object",
+      "properties": {
+        "patientName": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "specialty": { "type": "string" },
+        "hospitalName": { "type": "string" },
+        "date": { "type": "string" },
+        "timeSlot": { "type": "string" },
+        "status": { "type": "string" },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["patientName", "doctorName", "date", "status"]
+    },
+    "records": {
+      "title": "Medical Record",
+      "description": "Patient medical records in vault",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "recordDate": { "type": "string" },
+        "fileName": { "type": "string" },
+        "fileSize": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "uploadedAt": { "type": "string" }
+      },
+      "required": ["title", "category", "recordDate"]
+    },
+    "users": {
+      "title": "User Profile",
+      "description": "User profile data and preferences",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "role": { "type": "string" }
+      },
+      "required": ["name", "email"]
+    },
+    "adminConfigs": {
+      "title": "Admin Config",
+      "description": "Admin configuration and secret settings",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string" },
+        "secretApiKey": { "type": "string" },
+        "lastLoginAt": { "type": "string" },
+        "apiUsageReduced": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/doctors/{doctorId}": {
+      "entity": "doctors",
+      "description": "Collection of doctor profiles"
+    },
+    "/hospitals/{hospitalId}": {
+      "entity": "hospitals",
+      "description": "Collection of hospital facilities"
+    },
+    "/banners/{bannerId}": {
+      "entity": "banners",
+      "description": "Promotional carousel banners"
+    },
+    "/emergencyAlerts/{alertId}": {
+      "entity": "emergencyAlerts",
+      "description": "Emergency and health alert broadcasts"
+    },
+    "/appointments/{appointmentId}": {
+      "entity": "appointments",
+      "description": "Patient doctor appointment bookings"
+    },
+    "/records/{recordId}": {
+      "entity": "records",
+      "description": "Medical record vault entries"
+    },
+    "/users/{userId}": {
+      "entity": "users",
+      "description": "User profile information"
+    },
+    "/adminConfigs/{configId}": {
+      "entity": "adminConfigs",
+      "description": "System admin configuration and keys"
+    }
+  }
+}
