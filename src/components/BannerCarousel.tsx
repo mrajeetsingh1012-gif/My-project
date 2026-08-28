@@ -76,45 +76,55 @@ export const BannerCarousel: React.FC<BannerCarouselProps> = ({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="flex items-center justify-between gap-4">
+      <div 
+        onClick={() => handleAction(currentBanner.actionUrl)}
+        className="flex items-center justify-between gap-4 cursor-pointer group"
+      >
         {/* Left Text */}
         <div className="space-y-2 max-w-md">
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 leading-tight font-display">
-            {currentIndex === 0 ? "We're with you in every step" : currentBanner.title}
+          {currentBanner.badge && (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-600/10 dark:bg-blue-400/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+              {currentBanner.badge}
+            </span>
+          )}
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 leading-tight font-display group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            {currentBanner.title}
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
-            {currentIndex === 0 ? "Compassionate care, closer to you." : currentBanner.subtitle}
+            {currentBanner.subtitle}
           </p>
         </div>
 
         {/* Right Doctor Image */}
-        <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 relative rounded-2xl overflow-hidden shadow-sm border-2 border-white dark:border-slate-700">
+        <div className="w-28 h-28 sm:w-36 sm:h-36 shrink-0 relative rounded-2xl overflow-hidden shadow-sm border-2 border-white dark:border-slate-700 group-hover:scale-105 transition-transform duration-200">
           <img
-            src={currentIndex === 0 
-              ? "https://images.unsplash.com/photo-1594824813572-c2834b9d0e12?auto=format&fit=crop&q=80&w=400"
-              : currentBanner.imageUrl
-            }
-            alt="Doctor caring"
+            src={currentBanner.imageUrl || "https://images.unsplash.com/photo-1594824813572-c2834b9d0e12?auto=format&fit=crop&q=80&w=400"}
+            alt={currentBanner.title}
             className="w-full h-full object-cover object-top"
           />
         </div>
       </div>
 
       {/* Pagination Dots at Bottom Center */}
-      <div className="flex items-center justify-center gap-1.5 mt-4">
-        {[0, 1, 2, 3, 4].map((idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx % activeBanners.length)}
-            className={`h-2 rounded-full transition-all ${
-              idx === (currentIndex % 5)
-                ? 'w-2 bg-blue-600 dark:bg-blue-400'
-                : 'w-2 bg-sky-200 dark:bg-slate-600 hover:bg-sky-300'
-            }`}
-            aria-label={`Slide ${idx + 1}`}
-          />
-        ))}
-      </div>
+      {activeBanners.length > 1 && (
+        <div className="flex items-center justify-center gap-1.5 mt-4">
+          {activeBanners.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentIndex(idx);
+              }}
+              className={`h-2 rounded-full transition-all ${
+                idx === currentIndex
+                  ? 'w-6 bg-blue-600 dark:bg-blue-400'
+                  : 'w-2 bg-sky-200 dark:bg-slate-600 hover:bg-sky-300'
+              }`}
+              aria-label={`Slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

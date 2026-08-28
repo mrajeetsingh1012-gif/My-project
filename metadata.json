@@ -1,6 +1,6 @@
 {
   "name": "MEDCONNECT",
   "description": "A complete healthcare companion PWA for doctor discovery, appointment requests, medical records, emergency SOS, and AI health guidance with MedConnect Pulse.",
-  "requestFramePermissions": ["geolocation"],
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

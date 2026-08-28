@@ -19,7 +19,10 @@ import {
   MessageSquare,
   Lock,
   PhoneCall,
+  Mail,
   Sparkles,
+  Crown,
+  Zap,
   Info
 } from 'lucide-react';
 import { UserProfile } from '../types';
@@ -39,6 +42,7 @@ interface NavigationDrawerProps {
   onOpenNotifications?: () => void;
   onOpenSettings?: () => void;
   onOpenAuth?: () => void;
+  onOpenMembership?: () => void;
   onOpenEmergency?: () => void;
   onOpenRewards?: () => void;
   onOpenAppointments?: () => void;
@@ -68,6 +72,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onOpenNotifications,
   onOpenSettings,
   onOpenAuth,
+  onOpenMembership,
   onOpenEmergency,
   onOpenRewards,
   onOpenAppointments,
@@ -180,6 +185,37 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                   View ID
                 </span>
               </div>
+
+              {/* MEDCONNECT Plus Premium Membership Upgrade Banner */}
+              <button
+                type="button"
+                onClick={() =>
+                  handleNavClick(() => {
+                    if (typeof onOpenMembership === 'function') onOpenMembership();
+                  })
+                }
+                className="w-full mt-2.5 p-3 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md hover:shadow-lg transition-all active:scale-[0.98] text-left cursor-pointer flex items-center justify-between"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
+                    <Crown className="w-4 h-4 text-amber-300" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-black tracking-tight">MEDCONNECT Plus</span>
+                      <span className="px-1.5 py-0.2 bg-amber-400 text-slate-950 font-extrabold text-[9px] rounded-full uppercase">
+                        {user?.subscriptionPlan === 'plus' ? 'Active' : 'Save ~16%'}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-blue-100 font-medium line-clamp-1">
+                      {user?.subscriptionPlan === 'plus'
+                        ? 'Intelligent Health Tools Active'
+                        : '₹99/mo or ₹999/yr • Best Value'}
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-white/80 shrink-0" />
+              </button>
             </div>
 
             {/* Navigation List of Tactile Buttons */}
@@ -329,6 +365,35 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                   Health & Wellness
                 </p>
+
+                {/* MEDCONNECT Plus Premium Option */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleNavClick(() => {
+                      if (typeof onOpenMembership === 'function') onOpenMembership();
+                    })
+                  }
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-indigo-300/80 dark:border-indigo-800 bg-gradient-to-r from-blue-50/90 via-indigo-50/90 to-purple-50/90 dark:from-blue-950/40 dark:via-indigo-950/40 dark:to-purple-950/40 hover:from-blue-100/90 hover:to-purple-100/90 text-slate-900 dark:text-slate-100 font-bold transition-all active:scale-[0.98] cursor-pointer shadow-xs"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 flex items-center justify-center shrink-0 shadow-xs">
+                      <Crown className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <p className="text-sm font-black text-indigo-950 dark:text-indigo-200 leading-snug">MEDCONNECT Plus</p>
+                        <span className="text-[9px] px-1.5 py-0.2 bg-amber-400 text-slate-950 font-black rounded-full uppercase">
+                          {user?.subscriptionPlan === 'plus' ? 'Active' : 'Save ~16%'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-indigo-600 dark:text-indigo-400 font-normal">
+                        {user?.subscriptionPlan === 'plus' ? 'Intelligent Health Tools' : '₹99/mo or ₹999/yr • Upgrade'}
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-indigo-500 shrink-0" />
+                </button>
 
                 {/* AI Assistant MedConnect Pulse */}
                 <button
@@ -524,27 +589,26 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                   <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
                 </button>
 
-                {/* 12. Terms & Conditions */}
+                {/* 13. Register or Switch Account */}
                 <button
                   type="button"
                   onClick={() =>
                     handleNavClick(() => {
-                      if (typeof onOpenTerms === 'function') onOpenTerms();
-                      else setActiveInfoModal('terms');
+                      if (typeof onOpenAuth === 'function') onOpenAuth();
                     })
                   }
-                  className="w-full flex items-center justify-between p-3 rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-slate-50/80 hover:bg-slate-100 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium transition-all active:scale-[0.98] cursor-pointer"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50/70 hover:bg-blue-100 dark:bg-blue-950/40 dark:hover:bg-blue-900/60 text-blue-900 dark:text-blue-200 font-bold transition-all active:scale-[0.98] cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center shrink-0">
-                      <FileText className="w-5 h-5" />
+                    <div className="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <Lock className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm leading-snug">Terms & Conditions</p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Terms of Usage</p>
+                      <p className="text-sm leading-snug">Login / Register Account</p>
+                      <p className="text-[11px] text-blue-600 dark:text-blue-400 font-normal">Phone OTP & Email Login</p>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-blue-500 shrink-0" />
                 </button>
               </div>
 
@@ -650,17 +714,31 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               {/* HELP & SUPPORT */}
               {activeInfoModal === 'support' && (
                 <div className="space-y-4">
-                  <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 flex items-center justify-between">
+                  <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <p className="font-bold text-blue-900 dark:text-blue-300">24/7 Patient Helpline</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Toll-free instant phone support</p>
+                      <p className="font-bold text-blue-900 dark:text-blue-300">24x7 Patient Helpline</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Instant phone, call & WhatsApp support (24x7)</p>
                     </div>
                     <a
-                      href="tel:18005550199"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-xs shadow-sm hover:bg-blue-700 transition-colors flex items-center gap-1.5"
+                      href="tel:+916388022910"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-xs shadow-sm hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5 self-start sm:self-auto"
                     >
                       <PhoneCall className="w-3.5 h-3.5" />
-                      Call 1800-MED
+                      +91 6388022910
+                    </a>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <p className="font-bold text-emerald-900 dark:text-emerald-300">Official Support Email</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Direct response from our coordinators (24x7)</p>
+                    </div>
+                    <a
+                      href="mailto:Mrajeetsingh1012@gmail.com"
+                      className="px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs shadow-sm hover:bg-emerald-700 transition-colors flex items-center justify-center gap-1.5 self-start sm:self-auto"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      Mrajeetsingh1012@gmail.com
                     </a>
                   </div>
 
@@ -681,11 +759,42 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               {/* CONTACT US */}
               {activeInfoModal === 'contact' && (
                 <div className="space-y-3">
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
-                    <p className="font-bold text-slate-900 dark:text-slate-100">Official Healthcare Hotline</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-300">Phone: +1 (800) 555-0199 / +1 (800) 112-9900</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-300">Email: support@medconnect-health.org</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-300">Hours: Monday - Sunday, 24 Hours Active</p>
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <p className="font-bold text-slate-900 dark:text-slate-100">Official Healthcare Hotline & Support Desk</p>
+                    <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold block">Phone (24x7)</span>
+                        <a href="tel:+916388022910" className="text-sm text-blue-600 dark:text-blue-400 font-extrabold hover:underline flex items-center gap-1.5 mt-0.5">
+                          <PhoneCall className="w-4 h-4" />
+                          +91 6388022910
+                        </a>
+                      </div>
+                      <a
+                        href="tel:+916388022910"
+                        className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
+                      >
+                        Call Now
+                      </a>
+                    </div>
+                    <div className="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold block">Email</span>
+                        <a href="mailto:Mrajeetsingh1012@gmail.com" className="text-sm text-emerald-600 dark:text-emerald-400 font-extrabold hover:underline flex items-center gap-1.5 mt-0.5">
+                          <Mail className="w-4 h-4" />
+                          Mrajeetsingh1012@gmail.com
+                        </a>
+                      </div>
+                      <a
+                        href="mailto:Mrajeetsingh1012@gmail.com"
+                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
+                      >
+                        Send Email
+                      </a>
+                    </div>
+                    <div className="p-2.5 bg-slate-100 dark:bg-slate-750 rounded-xl flex items-center justify-between text-xs text-slate-700 dark:text-slate-300">
+                      <span className="font-semibold text-slate-500 dark:text-slate-400">Operating Hours:</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800">24x7</span>
+                    </div>
                   </div>
                   <div className="p-4 rounded-2xl bg-teal-50 dark:bg-teal-950/40 border border-teal-100 dark:border-teal-900/50 flex items-center justify-between">
                     <div>

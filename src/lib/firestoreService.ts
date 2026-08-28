@@ -214,6 +214,14 @@ export async function saveBannerToDb(banner: Banner) {
   }
 }
 
+export async function deleteBannerFromDb(id: string) {
+  try {
+    await deleteDoc(doc(db, 'banners', id));
+  } catch (e) {
+    console.error('Error deleting banner from Firestore:', e);
+  }
+}
+
 // 4. Emergency Alerts CRUD
 export function subscribeEmergencyAlerts(callback: (alerts: EmergencyAlert[]) => void) {
   try {

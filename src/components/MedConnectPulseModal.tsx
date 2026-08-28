@@ -19,18 +19,21 @@ import {
   HelpCircle,
   Image as ImageIcon
 } from 'lucide-react';
-import { PulseMessage } from '../types';
+import { PulseMessage, UserProfile } from '../types';
 
 interface MedConnectPulseModalProps {
   isOpen: boolean;
   onClose: () => void;
   isOffline?: boolean;
+  user?: UserProfile;
+  onOpenEmergency?: () => void;
 }
 
 export const MedConnectPulseModal: React.FC<MedConnectPulseModalProps> = ({
   isOpen,
   onClose,
   isOffline = false,
+  onOpenEmergency,
 }) => {
   const [messages, setMessages] = useState<PulseMessage[]>([]);
   const [inputPrompt, setInputPrompt] = useState('');
@@ -127,7 +130,10 @@ export const MedConnectPulseModal: React.FC<MedConnectPulseModalProps> = ({
         text: m.text,
       }));
 
-      const savedSecretKey = localStorage.getItem('medconnect_custom_api_key') || undefined;
+      const savedSecretKey =
+        localStorage.getItem('medconnect_custom_gemini_key') ||
+        localStorage.getItem('medconnect_custom_api_key') ||
+        undefined;
 
       const res = await fetch('/api/pulse/chat', {
         method: 'POST',
@@ -492,6 +498,19 @@ export const MedConnectPulseModal: React.FC<MedConnectPulseModalProps> = ({
             </div>
 
             <div className="pt-2 flex flex-col gap-2">
+              {onOpenEmergency && (
+                <button
+                  onClick={() => {
+                    setShowDisclaimerModal(false);
+                    onClose();
+                    onOpenEmergency();
+                  }}
+                  className="w-full py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                >
+                  <AlertTriangle className="w-4 h-4" />
+                  Trigger Emergency SOS (112 / 108)
+                </button>
+              )}
               <button
                 onClick={handleAcceptDisclaimer}
                 className="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm rounded-xl shadow-md transition-all"

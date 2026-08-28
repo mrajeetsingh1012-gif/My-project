@@ -27,83 +27,95 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 h-16 sm:h-20 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center px-2 sm:px-8 relative shrink-0 shadow-lg transition-colors">
-      <div className="max-w-3xl w-full mx-auto flex justify-between items-center">
-        {/* Home */}
+    <nav className="fixed bottom-0 left-0 right-0 z-30 h-16 sm:h-18 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200/80 dark:border-slate-800 flex items-center px-2 sm:px-6 relative shrink-0 shadow-lg transition-colors">
+      <div className="max-w-3xl w-full mx-auto grid grid-cols-5 items-center">
+        {/* 1. Home */}
         <button
           onClick={() => handleSelect('home')}
-          className={`flex flex-col items-center gap-0.5 transition-colors ${
+          className={`flex flex-col items-center justify-center py-1.5 transition-all group ${
             selectedTab === 'home'
               ? 'text-blue-600 dark:text-blue-400 font-bold'
-              : 'text-slate-400 hover:text-blue-500 dark:text-slate-500'
+              : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 font-medium'
           }`}
           id="nav-home-btn"
+          aria-label="Home"
         >
-          <Home className="w-5 h-5 sm:w-6 sm:h-6" />
-          <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-widest">Home</span>
+          <div className={`p-1 rounded-full transition-transform ${selectedTab === 'home' ? 'bg-blue-50 dark:bg-blue-950/50 scale-110' : 'group-hover:scale-105'}`}>
+            <Home className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
+          </div>
+          <span className="text-[10px] sm:text-[11px] tracking-wide mt-0.5">Home</span>
         </button>
 
-        {/* Directory */}
+        {/* 2. Doctor / Directory */}
         <button
           onClick={() => handleSelect('directory')}
-          className={`flex flex-col items-center gap-0.5 transition-colors ${
+          className={`flex flex-col items-center justify-center py-1.5 transition-all group ${
             selectedTab === 'directory'
               ? 'text-blue-600 dark:text-blue-400 font-bold'
-              : 'text-slate-400 hover:text-blue-500 dark:text-slate-500'
+              : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 font-medium'
           }`}
           id="nav-directory-btn"
+          aria-label="Doctors Directory"
         >
-          <Search className="w-5 h-5 sm:w-6 sm:h-6" />
-          <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-widest">Doctors</span>
+          <div className={`p-1 rounded-full transition-transform ${selectedTab === 'directory' ? 'bg-blue-50 dark:bg-blue-950/50 scale-110' : 'group-hover:scale-105'}`}>
+            <Search className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
+          </div>
+          <span className="text-[10px] sm:text-[11px] tracking-wide mt-0.5">Doctors</span>
         </button>
 
-        {/* Appointments */}
+        {/* 3. Appointments */}
         <button
           onClick={() => handleSelect('appointments')}
-          className={`flex flex-col items-center gap-0.5 transition-colors ${
+          className={`flex flex-col items-center justify-center py-1.5 transition-all group ${
             selectedTab === 'appointments'
               ? 'text-blue-600 dark:text-blue-400 font-bold'
-              : 'text-slate-400 hover:text-blue-500 dark:text-slate-500'
+              : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 font-medium'
           }`}
           id="nav-appointments-btn"
+          aria-label="Appointments"
         >
-          <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
-          <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-widest">Appts</span>
+          <div className={`p-1 rounded-full transition-transform ${selectedTab === 'appointments' ? 'bg-blue-50 dark:bg-blue-950/50 scale-110' : 'group-hover:scale-105'}`}>
+            <Calendar className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
+          </div>
+          <span className="text-[10px] sm:text-[11px] tracking-wide mt-0.5">Appts</span>
         </button>
 
-        {/* Center Spacer for Pulse AI FAB */}
-        <div className="w-12 sm:w-16 shrink-0" aria-hidden="true" />
-
-        {/* Records */}
+        {/* 4. Vault / Medical Records */}
         <button
           onClick={() => handleSelect('records')}
-          className={`flex flex-col items-center gap-0.5 transition-colors ${
+          className={`flex flex-col items-center justify-center py-1.5 transition-all group ${
             selectedTab === 'records'
               ? 'text-blue-600 dark:text-blue-400 font-bold'
-              : 'text-slate-400 hover:text-blue-500 dark:text-slate-500'
+              : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 font-medium'
           }`}
           id="nav-records-btn"
+          aria-label="Records Vault"
         >
-          <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
-          <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-widest">Vault</span>
+          <div className={`p-1 rounded-full transition-transform ${selectedTab === 'records' ? 'bg-blue-50 dark:bg-blue-950/50 scale-110' : 'group-hover:scale-105'}`}>
+            <FileText className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
+          </div>
+          <span className="text-[10px] sm:text-[11px] tracking-wide mt-0.5">Vault</span>
         </button>
 
-        {/* Profile / Admin */}
+        {/* 5. Profile / Admin */}
         <button
           onClick={() => handleSelect(userRole === 'admin' ? 'admin' : 'profile')}
-          className={`flex flex-col items-center gap-0.5 transition-colors ${
+          className={`flex flex-col items-center justify-center py-1.5 transition-all group ${
             selectedTab === 'profile' || selectedTab === 'admin'
               ? 'text-blue-600 dark:text-blue-400 font-bold'
-              : 'text-slate-400 hover:text-blue-500 dark:text-slate-500'
+              : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 font-medium'
           }`}
           id="nav-profile-btn"
+          aria-label={userRole === 'admin' ? 'Admin Portal' : 'User Profile'}
         >
-          {userRole === 'admin' ? (
-            <Shield className="w-5 h-5 sm:w-6 sm:h-6" />
-          ) : (
-            <User className="w-5 h-5 sm:w-6 sm:h-6" />
-          )}
-          <span className="text-[9px] sm:text-[11px] font-bold uppercase tracking-widest">
+          <div className={`p-1 rounded-full transition-transform ${selectedTab === 'profile' || selectedTab === 'admin' ? 'bg-blue-50 dark:bg-blue-950/50 scale-110' : 'group-hover:scale-105'}`}>
+            {userRole === 'admin' ? (
+              <Shield className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
+            ) : (
+              <User className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
+            )}
+          </div>
+          <span className="text-[10px] sm:text-[11px] tracking-wide mt-0.5">
             {userRole === 'admin' ? 'Admin' : 'Profile'}
           </span>
         </button>

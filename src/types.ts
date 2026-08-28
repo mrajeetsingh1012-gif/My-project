@@ -20,6 +20,19 @@ export interface UserProfile {
   theme: ThemeMode;
   isLargeText: boolean;
   rewardPoints: number;
+  subscriptionPlan?: 'free' | 'plus';
+  subscriptionPeriod?: 'monthly' | 'yearly';
+  subscriptionExpiresAt?: string;
+}
+
+export interface PricingPlan {
+  id: 'free' | 'plus';
+  name: string;
+  badge?: string;
+  tagline: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  features: { text: string; included: boolean; isPlusOnly?: boolean }[];
 }
 
 export interface FamilyProfile {

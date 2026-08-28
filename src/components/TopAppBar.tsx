@@ -1,15 +1,20 @@
 import React from 'react';
-import { Menu, Bell, Settings, WifiOff, Shield, PlusCircle } from 'lucide-react';
+import { Menu, Bell, User, WifiOff, Shield, PlusCircle, Crown } from 'lucide-react';
+import { UserProfile } from '../types';
 
 interface TopAppBarProps {
   currentTab?: string;
   onOpenDrawer: () => void;
+  onNavigateHome?: () => void;
   userRole?: 'patient' | 'admin';
   onToggleRole?: (role: 'patient' | 'admin') => void;
   onOpenEmergency?: () => void;
   onOpenProfile?: () => void;
   onOpenNotifications?: () => void;
   onOpenSettings?: () => void;
+  onOpenAuth?: (mode?: 'register' | 'login') => void;
+  onOpenMembership?: () => void;
+  user?: UserProfile;
   unreadCount?: number;
   isOffline?: boolean;
 }
@@ -17,12 +22,16 @@ interface TopAppBarProps {
 export const TopAppBar: React.FC<TopAppBarProps> = ({
   currentTab,
   onOpenDrawer,
+  onNavigateHome,
   userRole = 'patient',
   onToggleRole,
   onOpenEmergency,
   onOpenProfile,
   onOpenNotifications,
   onOpenSettings,
+  onOpenAuth,
+  onOpenMembership,
+  user,
   unreadCount = 2,
   isOffline = false,
 }) => {
@@ -32,7 +41,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
         {/* Left: Drawer Toggle (Hamburger ☰) */}
         <button
           onClick={onOpenDrawer}
-          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-700 dark:text-slate-200 transition-colors focus:outline-none"
+          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-700 dark:text-slate-200 transition-colors focus:outline-none cursor-pointer"
           aria-label="Open Navigation Drawer"
           id="top-bar-drawer-btn"
         >
@@ -40,8 +49,13 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
         </button>
 
         {/* Center Brand Logo & Title */}
-        <div className="flex items-center gap-2 cursor-pointer select-none">
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-lg shadow-sm">
+        <button
+          onClick={() => {
+            if (typeof onNavigateHome === 'function') onNavigateHome();
+          }}
+          className="flex items-center gap-2 cursor-pointer select-none focus:outline-none group"
+        >
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-lg shadow-sm group-hover:scale-105 transition-transform">
             <PlusCircle className="w-6 h-6 fill-blue-600 text-white" />
           </div>
           <div className="flex items-center gap-1.5">
@@ -54,10 +68,28 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
               </span>
             )}
           </div>
-        </div>
+        </button>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
+          {/* MEDCONNECT Plus Crown Upgrade Pill Button */}
+          <button
+            onClick={() => {
+              if (typeof onOpenMembership === 'function') onOpenMembership();
+              else if (typeof onOpenSettings === 'function') onOpenSettings();
+            }}
+            className={`hidden xs:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black transition-all cursor-pointer shadow-xs ${
+              user?.subscriptionPlan === 'plus'
+                ? 'bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950 dark:text-amber-200 dark:border-amber-700'
+                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-600/20'
+            }`}
+            title="MEDCONNECT Plus Membership"
+            id="top-bar-plus-btn"
+          >
+            <Crown className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+            <span>{user?.subscriptionPlan === 'plus' ? 'PLUS' : 'Get Plus'}</span>
+          </button>
+
           {/* Notifications */}
           <button
             onClick={() => {
@@ -74,18 +106,29 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({
             )}
           </button>
 
-          {/* Settings Gear Option (Opens Right Drawer Settings) */}
+          {/* User Profile Avatar / Logo Button */}
           <button
             onClick={() => {
-              const fn = onOpenSettings || onOpenDrawer;
+              const fn = onOpenProfile || onOpenSettings || onOpenDrawer;
               if (typeof fn === 'function') fn();
             }}
-            className="p-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-full transition-all group"
-            aria-label="App Settings & Preferences"
+            className="p-1 rounded-full text-slate-700 dark:text-slate-200 hover:ring-2 hover:ring-blue-500/50 dark:hover:ring-blue-400/50 transition-all flex items-center justify-center group"
+            aria-label="User Profile"
             id="top-settings-btn"
-            title="App Settings & Preferences"
+            title={user?.name ? `${user.name} - Profile` : 'User Profile'}
           >
-            <Settings className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name || 'User Profile'}
+                className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-slate-700 group-hover:scale-105 transition-transform"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                <User className="w-4 h-4" />
+              </div>
+            )}
           </button>
         </div>
       </div>
