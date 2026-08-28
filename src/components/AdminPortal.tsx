@@ -186,6 +186,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
       if (
         (trimmedId.toLowerCase() === validId.toLowerCase() && (trimmedPass === validPass || (customLocalPass && trimmedPass === customLocalPass))) ||
+        (trimmedId.toLowerCase() === 'mrajeetsingh1012@gmail.com' && (trimmedPass === validPass || trimmedPass === 'MEDCONNECT#2026' || (customLocalPass && trimmedPass === customLocalPass))) ||
         (trimmedPass === validPass) ||
         (trimmedPass === 'MEDCONNECT#2026') ||
         (trimmedId === 'admin' && (trimmedPass === '1234' || trimmedPass === validPass))
